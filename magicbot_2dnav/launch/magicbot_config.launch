@@ -1,0 +1,6 @@
+<launch>
+	<include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch" />
+	<node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan" >
+	<param name="cloud_in" value="scan" />
+	</node>
+</launch>

@@ -1,0 +1,27 @@
+<launch>
+	<node name="gmapping_thing" pkg="gmapping" type="slam_gmapping" output="screen">
+	<param name="scan" value="scan" />
+	<param name="base_frame" value="magicbot" />
+	<param name="use_sim_time" value="true" />
+	</node>
+
+	<node pkg="tf2_ros" type="static_transform_publisher" name="odom_to_magicbot_broadcaster" args="0 0 .25 0 0 0 1 odom magicbot" />
+	<node pkg="tf2_ros" type="static_transform_publisher" name="top_left_wheelbase_to_magicbot_broadcaster" args="-.13 -.14 -.1375 0 0 0 1 magicbot top_left_wheelbase" />
+	<node pkg="tf2_ros" type="static_transform_publisher" name="top_right_wheelbase_to_magicbot_broadcaster" args="-.13 .14 -.1375 0 0 0 1 magicbot top_right_wheelbase" />
+	<node pkg="tf2_ros" type="static_transform_publisher" name="bottom_left_wheelbase_to_magicbot_broadcaster" args=".13 -.14 -.1375 0 0 0 1 magicbot bottom_left_wheelbase" />
+	<node pkg="tf2_ros" type="static_transform_publisher" name="bottom_right_wheelbase_to_magicbot_broadcaster" args=".13 .14 -.1375 0 0 0 1 magicbot bottom_right_wheelbase" />
+	<node pkg="tf2_ros" type="static_transform_publisher" name="wheelbase_to_top_left_wheel" args="-.02 -.08 0 0 0 1.570796 top_left_wheelbase top_left_wheel" />
+	<node pkg="tf2_ros" type="static_transform_publisher" name="wheelbase_to_top_right_wheel" args="-.02 .08 0 0 0 1.570796 top_right_wheelbase top_right_wheel" />
+	<node pkg="tf2_ros" type="static_transform_publisher" name="wheelbase_to_bottom_left_wheel" args=".02 -.08 0 0 0 1.570796 bottom_left_wheelbase bottom_left_wheel" />
+	<node pkg="tf2_ros" type="static_transform_publisher" name="wheelbase_to_bottom_right_wheel" args=".02 .08 0 0 0 1.570796 bottom_right_wheelbase bottom_right_wheel" />
+	<node pkg="tf2_ros" type="static_transform_publisher" name="lidar_mount_to_magicbot" args="0 0 .0925 0 0 0 1 magicbot lidar_mount" />
+	<node pkg="tf2_ros" type="static_transform_publisher" name="velodyne_to_lidar_mount" args="0 0 .05 0 0 0 1 lidar_mount velodyne" />
+
+	<include file="$(find amcl)/examples/amcl_diff.launch" />
+	<rosparam file="$(find magicbot_2dnav)/costmap_common_params.yaml" command="load" ns="global_costmap" />
+	<rosparam file="$(find magicbot_2dnav)/costmap_common_params.yaml" command="load" ns="local_costmap" />
+	<rosparam file="$(find magicbot_2dnav)/local_costmap_params.yaml" command="load" />
+	<rosparam file="$(find magicbot_2dnav)/global_costmap_params.yaml" command="load" />
+	<rosparam file="$(find magicbot_2dnav)/base_local_planner_params.yaml" command="load" />
+	<param name="robot_description" textfile="$(find magicbot_description)/urdf/magicbot.urdf"/>
+</launch>

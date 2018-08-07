@@ -1,0 +1,176 @@
+<robot name="magicbot">
+
+  <material name="white">
+    <color rgba="1 1 1 1"/>
+  </material>
+  <material name="black">
+    <color rgba="0 0 0 1"/>
+  </material>
+  <material name="gray">
+    <color rgba=".65098 .65098 .65098 1"/>
+  </material>
+
+  <link name="/magicbot">
+    <visual>
+      <geometry>
+        <box size=".4445 .3683 .165"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+  </link>
+
+  <link name="top_left_wheelbase">
+    <visual>
+      <geometry>
+        <box size=".15 .075 .075"/>
+      </geometry>
+      <material name="gray"/>
+    </visual>
+  </link>
+
+  <joint name="magicbot_to_top_left_wheelbase" type="fixed">
+    <parent link="/magicbot"/>
+    <child link="top_left_wheelbase"/>
+    <origin xyz="-.13 -.14 -.1375"/>
+  </joint>
+
+  <link name="top_right_wheelbase">
+    <visual>
+      <geometry>
+        <box size=".15 .075 .075"/>
+      </geometry>
+      <material name="gray"/>
+    </visual>
+  </link>
+
+  <joint name="magicbot_to_top_right_wheelbase" type="fixed">
+    <parent link="/magicbot"/>
+    <child link="top_right_wheelbase"/>
+    <origin xyz="-.13 .14 -.1375"/>
+  </joint>
+
+  <link name="bottom_left_wheelbase">
+    <visual>
+      <geometry>
+        <box size=".15 .075 .075"/>
+      </geometry>
+      <material name="gray"/>
+    </visual>
+  </link>
+
+  <joint name="magicbot_to_bottom_left_wheelbase" type="fixed">
+    <parent link="/magicbot"/>
+    <child link="bottom_left_wheelbase"/>
+    <origin xyz=".13 -.14 -.1375"/>
+  </joint>
+
+  <link name="bottom_right_wheelbase">
+    <visual>
+      <geometry>
+        <box size=".15 .075 .075"/>
+      </geometry>
+      <material name="gray"/>
+    </visual>
+  </link>
+
+  <joint name="magicbot_to_bottom_right_wheelbase" type="fixed">
+    <parent link="/magicbot"/>
+    <child link="bottom_right_wheelbase"/>
+    <origin xyz=".13 .14 -.1375"/>
+  </joint>
+
+  <link name="top_left_wheel">
+    <visual>
+      <geometry>
+        <cylinder length="0.08" radius=".0975"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+  </link>
+
+  <joint name="wheelbase_to_top_left_wheel" type="continuous">
+    <axiz rpy="0 0 0" xyz="0 0 1"/>
+    <parent link="top_left_wheelbase"/>
+    <child link="top_left_wheel"/>
+    <origin xyz="-.02 -.08 0" rpy="1.570796 0 0"/>
+  </joint>
+
+  <link name="top_right_wheel">
+    <visual>
+      <geometry>
+        <cylinder length="0.08" radius=".0975"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+  </link>
+
+  <joint name="wheelbase_to_top_right_wheelbase" type="continuous">
+    <axis rpy="0 0 0" xyz="0 0 1"/>
+    <parent link="top_right_wheelbase"/>
+    <child link="top_right_wheel"/>
+    <origin xyz="-.02 .08 0" rpy="1.570796 0 0"/>
+  </joint>
+
+  <link name="bottom_left_wheel">
+    <visual>
+      <geometry>
+        <cylinder length="0.08" radius=".0975"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+  </link>
+
+  <joint name="wheelbase_to_bottom_left_wheel" type="continuous">
+    <axis rpy="0 0 0" xyz="0 0 1"/>
+    <parent link="bottom_left_wheelbase"/>
+    <child link="bottom_left_wheel"/>
+    <origin xyz=".02 -.08 0" rpy="1.570796 0 0"/>
+  </joint>
+
+  <link name="bottom_right_wheel">
+    <visual>
+      <geometry>
+        <cylinder length="0.08" radius=".0975"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+  </link>
+
+  <joint name="wheelbase_to_bottom_right_wheel" type="continuous">
+    <axis rpy="0 0 0" xyz="0 0 1"/>
+    <parent link="bottom_right_wheelbase"/>
+    <child link="bottom_right_wheel"/>
+    <origin xyz=".02 .08 0" rpy="1.570796 0 0"/>
+  </joint>
+
+  <link name="lidar_mount">
+    <visual>
+      <geometry>
+        <box size=".14 .14 .02"/>
+      </geometry>
+      <material name="gray"/>
+    </visual>
+  </link>
+
+  <joint name="magicbot_to_lidar_mount" type="fixed">
+    <parent link="/magicbot"/>
+    <child link="lidar_mount"/>
+    <origin xyz="0 0 .0925"/>
+  </joint>
+
+  <link name="velodyne">
+    <visual>
+      <geometry>
+        <cylinder length="0.08" radius="0.05"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+  </link>
+
+  <joint name="lidar_mount_to_lidar" type="fixed">
+    <parent link="lidar_mount"/>
+    <child link="velodyne"/>
+    <origin xyz="0 0 .05"/>
+  </joint>
+</robot>
+
