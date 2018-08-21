@@ -1,6 +1,7 @@
 obstacle_range: 3.0
 raytrace_range: 3.0
-footprint: [[-0.18415, 0.22225], [-0.18415, -0.22225], [0.18415, 0.22225], [0.18415, -0.22225]]
+#footprint: [[-0.18415, 0.22225], [-0.18415, -0.22225], [0.18415, 0.22225], [0.18415, -0.22225]]
+robot_radius: .295
 inflation_radius: 0.25
 
 observation_sources: velodyne

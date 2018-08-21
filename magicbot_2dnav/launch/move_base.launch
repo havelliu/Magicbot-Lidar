@@ -1,4 +1,7 @@
 <launch>
+	<machine name="beaglebone" address="192.168.3.160" user="debian" password="temppwd" timeout="10.0" env-loader="~/catkin_ws/devel/env.sh" />
+	<node machine="beaglebone" name="magicbot_ros_node" pkg="magicbot_ros" type="magicbot_ros" output="screen" />
+	<include file="$(find magicbot_2dnav)/launch/magicbot_config.launch" />
 	<node name="gmapping_thing" pkg="gmapping" type="slam_gmapping" output="screen">
 	<param name="scan" value="scan" />
 	<param name="base_frame" value="magicbot" />
@@ -17,11 +20,49 @@
 	<node pkg="tf2_ros" type="static_transform_publisher" name="lidar_mount_to_magicbot" args="0 0 .0925 0 0 0 1 magicbot lidar_mount" />
 	<node pkg="tf2_ros" type="static_transform_publisher" name="velodyne_to_lidar_mount" args="0 0 .05 0 0 0 1 lidar_mount velodyne" />
 
-	<include file="$(find amcl)/examples/amcl_diff.launch" />
-	<rosparam file="$(find magicbot_2dnav)/costmap_common_params.yaml" command="load" ns="global_costmap" />
-	<rosparam file="$(find magicbot_2dnav)/costmap_common_params.yaml" command="load" ns="local_costmap" />
-	<rosparam file="$(find magicbot_2dnav)/local_costmap_params.yaml" command="load" />
-	<rosparam file="$(find magicbot_2dnav)/global_costmap_params.yaml" command="load" />
-	<rosparam file="$(find magicbot_2dnav)/base_local_planner_params.yaml" command="load" />
+	<node pkg="amcl" type="amcl" name="amcl" output="screen">
+	<param name="odom_model_type" value="diff"/>
+	<param name="min_particles" value="500"/>
+	<param name="max_particles" value="5000"/>
+	<param name="kld_err" value="0.05"/>
+	<param name="kld_z" value="0.99"/>
+	<param name="update_min_d" value="0.2"/>
+	<param name="update_min_a" value="0.5"/>
+	<param name="resample_interval" value="1"/>
+	<param name="transform_tolerance" value="0.1"/>
+	<param name="recovery_alpha_slow" value="0.0"/>
+	<param name="recovery_alpha_fast" value="0.0"/>
+	<param name="initial_pose_x" value="0.0"/>
+	<param name="initial_pose_y" value="0.0"/>
+	<param name="initial_pose_a" value="0.0"/>
+	<param name="initial_cov_xx" value="0.5*0.5"/>
+	<param name="initial_cov_yy" value="0.5*0.5"/>
+	<param name="intial_cov_aa" value=".261799333*.261799333"/>
+	<param name="gui_publish_rate" value="10.0"/>
+	<param name="save_pose_rate" value=".5"/>
+	<param name="use_map_topic" value="false"/>
+	<param name="first_map_only" value="false"/>
+	<param name="laser_min_range" value="-1.0"/>
+	<param name="laser_max_range" value="-1.0"/>
+	<param name="laser_max_beams" value="30"/>
+	<param name="laser_z_hit" value="0.5"/>
+	<param name="laser_z_short" value="0.05"/>
+	<param name="laser_z_max" value="0.05"/>
+	<param name="laser_z_rand" value="0.5"/>
+	<param name="laser_sigma_hit" value="0.2"/>
+	<param name="laser_lambda_short" value="0.1"/>
+	<param name="laser_likelihood_max_dist" value="2.0"/>
+	<param name="laser_model_type" value="likelihood_field"/>
+	<param name="odom_model_type" value="diff"/>
+	<param name="odom_alpha1" value="0.2"/>
+	<param name="odom_alpha2" value="0.2"/>
+	<param name="odom_alpha3" value="0.8"/>
+	<param name="odom_alpha4" value="0.2"/>
+	<param name="odom_frame_id" value="odom"/>
+	<param name="base_frame_id" value="magicbot"/>
+	<param name="global_frame_id" value="map"/>
+	<param name="tf_broadcast" value="true"/>
+	<rosparam file="$(find magicbot_2dnav)/costmap_common_params.yaml" ns="local_costmap" />
+	</node>
 	<param name="robot_description" textfile="$(find magicbot_description)/urdf/magicbot.urdf"/>
 </launch>
