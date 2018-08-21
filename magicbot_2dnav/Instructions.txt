@@ -1,0 +1,46 @@
+First, make sure you have ROS installed on your Beaglebone, robot laptop, and your remote laptop. 
+Follow the instructions online about installing ROS Kinetic Kame, and make sure everything is
+updated.
+
+Next, access your Beaglebone and create a catkin workspace. Then, run the terminal command 
+"catkin_make" to automatically configure the workspace. Next, within the src folder, create a 
+folder called "magicbot_ros". This will house all of your code to actually run the robot. Now
+that you have a folder for the code, create a git repository within the folder and set the 
+origin as:
+
+	https://github.com/havelliu/Magicbot---UMich.git
+
+Pull from this repository to get all of the source code as well as the necessary package.xml and 
+CMake files.  ||| Once you have downloaded everything, go back to the catkin workspace directory
+you created and run the terminal command "catkin_make" to compile the workspace. Finally, we
+need to make sure we're running the robotics cape commands as the root user, so type in the
+following terminal commands:
+
+	sudo chown root:root ~/(YOUR_CATKIN_WORKSPACE_NAME)/devel/lib/magicbot_ros/magicbot_ros
+	sudo chmod u+s ~/(YOUR_CATKIN_WORKSPACE_NAME)/devel/lib/magicbot_ros/magicbot_ros
+
+Your Beaglebone should be ready. Next, we can move on the the robot laptop. First, create a
+catkin workspace and run "catkin_make" to configure the workspace. Next, go into the src folder
+and initialize a git repository with the origin set as:
+
+	https://github.com/havelliu/Magicbot-Lidar.git
+
+Pull from this repository to get the launch files for the lidar sensor. Next, download the
+necessary ROS packages using the following terminal commands:
+
+	sudo apt-get install ros-kinetic-velodyne
+	sudo apt-get install ros-kinetic-pointcloud-to-laserscan
+	sudo apt-get install ros-kinetic-turtlebot3
+
+Lastly, you'll need to go and modify the turtlebot files to run with the magicbot. The 
+turtlebot3 package contains multiple sub-packages to run the turtlebot3 robot. The first
+package we'll need to modify on the robot laptop is the turtlebot3_bringup package. 
+The launch files for ROS packages installed through apt-get will be located in the root
+directory, so you'll need to run these terminal commands:
+
+	cd //
+	cd opt/ros/kinetic/share/turtlebot3_bringup/launch
+
+This should bring you to the launch folder of the turtlebot3_bringup package. You will see
+multiple launch files. Using admin privileges, open up the file "turtlebot3_robot.launch"
+with a text editor. 
