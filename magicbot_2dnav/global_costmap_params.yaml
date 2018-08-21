@@ -1,4 +1,0 @@
-global_frame: /map
-robot_base_frame: magicbot
-update_frequency: 2.0
-static_map: true
